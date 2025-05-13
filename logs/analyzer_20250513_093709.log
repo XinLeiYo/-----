@@ -1,0 +1,108 @@
+2025-05-13 17:37:09,327 - INFO - 已載入自定義字典，共 195 個詞
+2025-05-13 17:37:09,327 - INFO - 已載入閾值設定: {'positive': 0.9000000000000002, 'negative': 0.2}
+2025-05-13 17:37:09,339 - INFO - RAG Agent 初始化完成
+2025-05-13 17:37:09,339 - INFO - 情感分析器初始化完成
+2025-05-13 17:37:17,800 - INFO - 已載入自定義字典，共 195 個詞
+2025-05-13 17:37:17,801 - INFO - 已載入閾值設定: {'positive': 0.9000000000000002, 'negative': 0.2}
+2025-05-13 17:37:17,801 - INFO - RAG Agent 初始化完成
+2025-05-13 17:37:17,802 - INFO - 情感分析器初始化完成
+2025-05-13 17:37:18,796 - INFO - 已載入自定義字典，共 195 個詞
+2025-05-13 17:37:18,802 - INFO - 已載入閾值設定: {'positive': 0.9000000000000002, 'negative': 0.2}
+2025-05-13 17:37:18,803 - INFO - RAG Agent 初始化完成
+2025-05-13 17:37:18,803 - INFO - 情感分析器初始化完成
+2025-05-13 17:37:18,815 - INFO - RAG分析完成: {"matched_rules": [], "context_patterns": {"context_length": 1, "sentiment_flow": {"trend": 0.0, "volatility": 0.0}}, "analysis_time": "2025-05-13T09:37:18.815693"}
+2025-05-13 17:37:24,905 - INFO - 已載入自定義字典，共 195 個詞
+2025-05-13 17:37:24,906 - INFO - 已載入閾值設定: {'positive': 0.9000000000000002, 'negative': 0.2}
+2025-05-13 17:37:24,906 - INFO - RAG Agent 初始化完成
+2025-05-13 17:37:24,906 - INFO - 情感分析器初始化完成
+2025-05-13 17:37:24,923 - INFO - 開始生成訓練數據...
+2025-05-13 17:37:24,985 - INFO - 成功生成訓練數據，共 400 條記錄
+2025-05-13 17:37:24,985 - INFO - 數據已保存至: data/training_data_20250513_093724.csv
+2025-05-13 17:37:24,989 - INFO - 訓練數據已保存: data/training_data_20250513_093724.csv
+2025-05-13 17:37:24,993 - INFO - 數據分布情況：
+2025-05-13 17:37:24,993 - INFO - 正面評論(>0.7): 100
+2025-05-13 17:37:24,993 - INFO - 負面評論(<0.3): 164
+2025-05-13 17:37:24,993 - INFO - 中性評論(0.3-0.7): 136
+2025-05-13 17:37:24,993 - INFO - 開始模型調優...
+2025-05-13 17:37:24,994 - INFO - 建立自定義字典...
+2025-05-13 17:37:25,332 - INFO - 自定義字典建立完成，共包含 232 個詞
+2025-05-13 17:37:25,334 - INFO - 自定義字典已保存: models/custom_dict_20250513_093725.json
+2025-05-13 17:37:25,335 - INFO - 優化閾值...
+2025-05-13 17:37:25,676 - INFO - 優化後的閾值: 正面=0.90, 負面=0.20, 準確率=0.46
+2025-05-13 17:37:25,678 - INFO - 閾值配置已保存: models/thresholds_20250513_093725.json
+2025-05-13 17:37:25,679 - INFO - 評估模型性能...
+2025-05-13 17:37:25,774 - INFO - 評估結果: {'accuracy': 0.3875, 'average_error': 0.409625, 'average_confidence': 0.6504836166897919, 'high_confidence_accuracy': 0.4444444444444444}
+2025-05-13 17:37:25,775 - INFO - 模型調優完成！
+2025-05-13 17:37:25,775 - INFO - 評估指標: {'accuracy': 0.3875, 'average_error': 0.409625, 'average_confidence': 0.6504836166897919, 'high_confidence_accuracy': 0.4444444444444444}
+2025-05-13 17:37:25,776 - INFO - 評估結果已保存: evaluation\evaluation_20250513_093724.txt
+2025-05-13 17:37:29,699 - INFO - 已載入自定義字典，共 195 個詞
+2025-05-13 17:37:29,700 - INFO - 已載入閾值設定: {'positive': 0.9000000000000002, 'negative': 0.2}
+2025-05-13 17:37:29,700 - INFO - RAG Agent 初始化完成
+2025-05-13 17:37:29,701 - INFO - 情感分析器初始化完成
+2025-05-13 17:37:32,985 - INFO - 已載入自定義字典，共 195 個詞
+2025-05-13 17:37:32,986 - INFO - 已載入閾值設定: {'positive': 0.9000000000000002, 'negative': 0.2}
+2025-05-13 17:37:32,986 - INFO - RAG Agent 初始化完成
+2025-05-13 17:37:32,987 - INFO - 情感分析器初始化完成
+2025-05-13 17:37:33,619 - INFO - 已載入自定義字典，共 195 個詞
+2025-05-13 17:37:33,620 - INFO - 已載入閾值設定: {'positive': 0.9000000000000002, 'negative': 0.2}
+2025-05-13 17:37:33,620 - INFO - RAG Agent 初始化完成
+2025-05-13 17:37:33,620 - INFO - 情感分析器初始化完成
+2025-05-13 17:37:33,632 - INFO - RAG分析完成: {"matched_rules": [], "context_patterns": {"context_length": 1, "sentiment_flow": {"trend": 0.0, "volatility": 0.0}}, "analysis_time": "2025-05-13T09:37:33.632357"}
+2025-05-13 17:39:11,372 - INFO - 已載入自定義字典，共 195 個詞
+2025-05-13 17:39:11,372 - INFO - 已載入閾值設定: {'positive': 0.9000000000000002, 'negative': 0.2}
+2025-05-13 17:39:11,373 - INFO - RAG Agent 初始化完成
+2025-05-13 17:39:11,373 - INFO - 情感分析器初始化完成
+2025-05-13 17:39:12,219 - INFO - 已載入自定義字典，共 195 個詞
+2025-05-13 17:39:12,220 - INFO - 已載入閾值設定: {'positive': 0.9000000000000002, 'negative': 0.2}
+2025-05-13 17:39:12,220 - INFO - RAG Agent 初始化完成
+2025-05-13 17:39:12,220 - INFO - 情感分析器初始化完成
+2025-05-13 17:39:12,229 - INFO - RAG分析完成: {"matched_rules": [{"id": "irony_detection_1", "name": "反諷檢測規則-1", "patterns": ["真是", "太厲害了", "呢"], "conditions": {"requires_punctuation": true, "context_check": true}, "adjustment": {"sentiment_score": -0.3, "confidence_boost": 0.1}}], "context_patterns": {"context_length": 1, "sentiment_flow": {"trend": 0.0, "volatility": 0.0}}, "analysis_time": "2025-05-13T09:39:12.229882"}
+2025-05-13 17:39:18,248 - INFO - 已載入自定義字典，共 195 個詞
+2025-05-13 17:39:18,249 - INFO - 已載入閾值設定: {'positive': 0.9000000000000002, 'negative': 0.2}
+2025-05-13 17:39:18,249 - INFO - RAG Agent 初始化完成
+2025-05-13 17:39:18,249 - INFO - 情感分析器初始化完成
+2025-05-13 17:39:18,352 - INFO - 已載入自定義字典，共 195 個詞
+2025-05-13 17:39:18,353 - INFO - 已載入閾值設定: {'positive': 0.9000000000000002, 'negative': 0.2}
+2025-05-13 17:39:18,353 - INFO - RAG Agent 初始化完成
+2025-05-13 17:39:18,354 - INFO - 情感分析器初始化完成
+2025-05-13 17:39:18,364 - INFO - RAG分析完成: {"matched_rules": [{"id": "irony_detection_1", "name": "反諷檢測規則-1", "patterns": ["真是", "太厲害了", "呢"], "conditions": {"requires_punctuation": true, "context_check": true}, "adjustment": {"sentiment_score": -0.3, "confidence_boost": 0.1}}], "context_patterns": {"context_length": 1, "sentiment_flow": {"trend": 0.0, "volatility": 0.0}}, "analysis_time": "2025-05-13T09:39:18.364093"}
+2025-05-13 17:39:20,638 - INFO - 已載入自定義字典，共 195 個詞
+2025-05-13 17:39:20,639 - INFO - 已載入閾值設定: {'positive': 0.9000000000000002, 'negative': 0.2}
+2025-05-13 17:39:20,639 - INFO - RAG Agent 初始化完成
+2025-05-13 17:39:20,640 - INFO - 情感分析器初始化完成
+2025-05-13 17:39:21,537 - INFO - 已載入自定義字典，共 195 個詞
+2025-05-13 17:39:21,538 - INFO - 已載入閾值設定: {'positive': 0.9000000000000002, 'negative': 0.2}
+2025-05-13 17:39:21,538 - INFO - RAG Agent 初始化完成
+2025-05-13 17:39:21,538 - INFO - 情感分析器初始化完成
+2025-05-13 17:39:21,548 - INFO - RAG分析完成: {"matched_rules": [], "context_patterns": {"context_length": 1, "sentiment_flow": {"trend": 0.0, "volatility": 0.0}}, "analysis_time": "2025-05-13T09:39:21.548788"}
+2025-05-13 17:39:26,125 - INFO - 已載入自定義字典，共 195 個詞
+2025-05-13 17:39:26,126 - INFO - 已載入閾值設定: {'positive': 0.9000000000000002, 'negative': 0.2}
+2025-05-13 17:39:26,126 - INFO - RAG Agent 初始化完成
+2025-05-13 17:39:26,126 - INFO - 情感分析器初始化完成
+2025-05-13 17:39:26,953 - INFO - 已載入自定義字典，共 195 個詞
+2025-05-13 17:39:26,953 - INFO - 已載入閾值設定: {'positive': 0.9000000000000002, 'negative': 0.2}
+2025-05-13 17:39:26,954 - INFO - RAG Agent 初始化完成
+2025-05-13 17:39:26,954 - INFO - 情感分析器初始化完成
+2025-05-13 17:39:26,963 - INFO - RAG分析完成: {"matched_rules": [], "context_patterns": {"context_length": 1, "sentiment_flow": {"trend": 0.0, "volatility": 0.0}}, "analysis_time": "2025-05-13T09:39:26.963040"}
+2025-05-13 17:39:28,980 - INFO - 已載入自定義字典，共 195 個詞
+2025-05-13 17:39:28,980 - INFO - 已載入閾值設定: {'positive': 0.9000000000000002, 'negative': 0.2}
+2025-05-13 17:39:28,980 - INFO - RAG Agent 初始化完成
+2025-05-13 17:39:28,982 - INFO - 情感分析器初始化完成
+2025-05-13 17:39:34,793 - INFO - 已載入自定義字典，共 195 個詞
+2025-05-13 17:39:34,793 - INFO - 已載入閾值設定: {'positive': 0.9000000000000002, 'negative': 0.2}
+2025-05-13 17:39:34,794 - INFO - RAG Agent 初始化完成
+2025-05-13 17:39:34,794 - INFO - 情感分析器初始化完成
+2025-05-13 17:39:34,897 - INFO - 已載入自定義字典，共 195 個詞
+2025-05-13 17:39:34,897 - INFO - 已載入閾值設定: {'positive': 0.9000000000000002, 'negative': 0.2}
+2025-05-13 17:39:34,899 - INFO - RAG Agent 初始化完成
+2025-05-13 17:39:34,899 - INFO - 情感分析器初始化完成
+2025-05-13 17:39:34,909 - INFO - RAG分析完成: {"matched_rules": [{"id": "irony_detection_1", "name": "反諷檢測規則-1", "patterns": ["真是", "太厲害了", "呢"], "conditions": {"requires_punctuation": true, "context_check": true}, "adjustment": {"sentiment_score": -0.3, "confidence_boost": 0.1}}, {"id": "strong_positive_1", "name": "強烈正面-1", "patterns": ["超讚", "無敵", "神器"], "conditions": {"requires_punctuation": false, "context_check": false}, "adjustment": {"sentiment_score": 0.3, "confidence_boost": 0.2}}], "context_patterns": {"context_length": 1, "sentiment_flow": {"trend": 0.0, "volatility": 0.0}}, "analysis_time": "2025-05-13T09:39:34.909152"}
+2025-05-13 17:39:41,653 - INFO - 已載入自定義字典，共 195 個詞
+2025-05-13 17:39:41,654 - INFO - 已載入閾值設定: {'positive': 0.9000000000000002, 'negative': 0.2}
+2025-05-13 17:39:41,654 - INFO - RAG Agent 初始化完成
+2025-05-13 17:39:41,654 - INFO - 情感分析器初始化完成
+2025-05-13 17:39:41,773 - INFO - 已載入自定義字典，共 195 個詞
+2025-05-13 17:39:41,773 - INFO - 已載入閾值設定: {'positive': 0.9000000000000002, 'negative': 0.2}
+2025-05-13 17:39:41,774 - INFO - RAG Agent 初始化完成
+2025-05-13 17:39:41,774 - INFO - 情感分析器初始化完成
+2025-05-13 17:39:41,784 - INFO - RAG分析完成: {"matched_rules": [{"id": "strong_positive_1", "name": "強烈正面-1", "patterns": ["超讚", "無敵", "神器"], "conditions": {"requires_punctuation": false, "context_check": false}, "adjustment": {"sentiment_score": 0.3, "confidence_boost": 0.2}}], "context_patterns": {"context_length": 1, "sentiment_flow": {"trend": 0.0, "volatility": 0.0}}, "analysis_time": "2025-05-13T09:39:41.784045"}

@@ -1,0 +1,261 @@
+{
+    "version": "1.0.0",
+    "last_updated": "2025-05-13",
+    "sentiment_dict": {
+        "positive": {
+            "太棒": 1.0,
+            "美味": 0.9,
+            "感動": 0.8,
+            "優秀": 0.7,
+            "不錯": 0.5,
+            "超愛": 1.0,
+            "神器": 0.9,
+            "無敵": 0.8,
+            "讚": 0.7,
+            "好": 0.6,
+            "親切": 0.7,
+            "謝謝": 0.6,
+            "感恩": 0.7,
+            "加油": 0.6
+        },
+        "negative": {
+            "糟糕": -0.8,
+            "差勁": -0.9,
+            "不滿意": -0.5,
+            "差": -0.7,
+            "爛": -0.9,
+            "貴": -0.4,
+            "垃圾": -0.8,
+            "噁心": -0.9,
+            "失望": -0.6,
+            "遺憾": -0.5,
+            "難過": -0.6,
+            "生氣": -0.7
+        }
+    },
+    "intensifiers": {
+        "真是": 1.5,
+        "太": 1.3,
+        "非常": 1.4,
+        "超級": 1.5,
+        "特別": 1.2,
+        "很": 1.2,
+        "真的": 1.3,
+        "簡直": 1.4
+    },
+    "rules": [
+        {
+            "id": "irony_detection_1",
+            "name": "反諷檢測規則-1",
+            "patterns": ["真是", "太厲害了", "呢"],
+            "conditions": {
+                "requires_punctuation": true,
+                "context_check": true
+            },
+            "adjustment": {
+                "sentiment_score": -0.3,
+                "confidence_boost": 0.1
+            }
+        },
+        {
+            "id": "strong_positive_1",
+            "name": "強烈正面-1",
+            "patterns": ["超讚", "無敵", "神器"],
+            "conditions": {
+                "requires_punctuation": false,
+                "context_check": false
+            },
+            "adjustment": {
+                "sentiment_score": 0.3,
+                "confidence_boost": 0.2
+            }
+        },
+        {
+            "id": "strong_negative_1",
+            "name": "強烈負面-1",
+            "patterns": ["爛透了", "垃圾", "噁心"],
+            "conditions": {
+                "requires_punctuation": false,
+                "context_check": false
+            },
+            "adjustment": {
+                "sentiment_score": -0.4,
+                "confidence_boost": 0.2
+            }
+        },
+        {
+            "id": "exaggeration_1",
+            "name": "誇張表達-1",
+            "patterns": ["簡直", "完全", "根本"],
+            "conditions": {
+                "requires_punctuation": true,
+                "context_check": true
+            },
+            "adjustment": {
+                "sentiment_score": 0.1,
+                "confidence_boost": 0.15
+            }
+        },
+        {
+            "id": "comparison_1",
+            "name": "比較表達-1",
+            "patterns": ["比", "更", "最"],
+            "conditions": {
+                "requires_punctuation": false,
+                "context_check": true
+            },
+            "adjustment": {
+                "sentiment_score": 0.1,
+                "confidence_boost": 0.1
+            }
+        },
+        {
+            "id": "doubt_1",
+            "name": "懷疑表達-1",
+            "patterns": ["真的嗎", "是這樣嗎", "難道"],
+            "conditions": {
+                "requires_punctuation": true,
+                "context_check": true
+            },
+            "adjustment": {
+                "sentiment_score": -0.2,
+                "confidence_boost": 0.15
+            }
+        },
+        {
+            "id": "repetition_1",
+            "name": "重複強調-1",
+            "patterns": ["很很很", "太太太", "超超超"],
+            "conditions": {
+                "requires_punctuation": false,
+                "context_check": false
+            },
+            "adjustment": {
+                "sentiment_score": 0.2,
+                "confidence_boost": 0.2
+            }
+        },
+        {
+            "id": "emoji_1",
+            "name": "表情符號-1",
+            "patterns": ["！！！", "。。。", "？？？"],
+            "conditions": {
+                "requires_punctuation": true,
+                "context_check": false
+            },
+            "adjustment": {
+                "sentiment_score": 0.1,
+                "confidence_boost": 0.1
+            }
+        },{
+            "id": "daily_positive_1",
+            "name": "日常正面-1",
+            "patterns": ["謝謝", "感恩", "辛苦了"],
+            "conditions": {
+                "requires_punctuation": false,
+                "context_check": false
+            },
+            "adjustment": {
+                "sentiment_score": 0.25,
+                "confidence_boost": 0.15
+            }
+        },
+        {
+            "id": "daily_negative_1",
+            "name": "日常負面-1",
+            "patterns": ["抱歉", "對不起", "很遺憾"],
+            "conditions": {
+                "requires_punctuation": false,
+                "context_check": true
+            },
+            "adjustment": {
+                "sentiment_score": -0.15,
+                "confidence_boost": 0.1
+            }
+        },
+        {
+            "id": "daily_greeting_1",
+            "name": "日常問候-1",
+            "patterns": ["早安", "午安", "晚安"],
+            "conditions": {
+                "requires_punctuation": false,
+                "context_check": false
+            },
+            "adjustment": {
+                "sentiment_score": 0.2,
+                "confidence_boost": 0.1
+            }
+        },
+        {
+            "id": "daily_concern_1",
+            "name": "關心問候-1",
+            "patterns": ["要注意", "保重", "要小心"],
+            "conditions": {
+                "requires_punctuation": false,
+                "context_check": true
+            },
+            "adjustment": {
+                "sentiment_score": 0.2,
+                "confidence_boost": 0.15
+            }
+        },
+        {
+            "id": "daily_agreement_1",
+            "name": "認同表達-1",
+            "patterns": ["沒錯", "確實", "說得對"],
+            "conditions": {
+                "requires_punctuation": false,
+                "context_check": true
+            },
+            "adjustment": {
+                "sentiment_score": 0.15,
+                "confidence_boost": 0.1
+            }
+        },
+        {
+            "id": "daily_disagreement_1",
+            "name": "不同意表達-1",
+            "patterns": ["不對吧", "不是這樣", "有誤會"],
+            "conditions": {
+                "requires_punctuation": false,
+                "context_check": true
+            },
+            "adjustment": {
+                "sentiment_score": -0.15,
+                "confidence_boost": 0.1
+            }
+        },
+        {
+            "id": "daily_encouragement_1",
+            "name": "鼓勵表達-1",
+            "patterns": ["加油", "努力", "你可以的"],
+            "conditions": {
+                "requires_punctuation": false,
+                "context_check": false
+            },
+            "adjustment": {
+                "sentiment_score": 0.3,
+                "confidence_boost": 0.2
+            }
+        },
+        {
+            "id": "daily_comfort_1",
+            "name": "安慰表達-1",
+            "patterns": ["沒關係", "不要緊", "別擔心"],
+            "conditions": {
+                "requires_punctuation": false,
+                "context_check": true
+            },
+            "adjustment": {
+                "sentiment_score": 0.2,
+                "confidence_boost": 0.15
+            }
+        }
+    ],
+    "context_patterns": {
+        "sentiment_shift": {
+            "threshold": 0.5,
+            "window_size": 3
+        }
+    }
+}

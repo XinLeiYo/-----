@@ -2,7 +2,7 @@
 SentiTune-CN - 主應用程式
 Created: 2025-05-08 13:39:05 UTC
 Author: XinLeiYo
-Version: 1.0.0
+Version: 1.1.0
 
 此應用程式提供中文情感分析的網頁介面，
 整合了情感分析、模型調優和數據視覺化功能。
@@ -21,6 +21,7 @@ import logging
 
 # 自定義模組
 from sentiment_analyzer import SentimentAnalyzer
+from src.agents.rag_agent import RAGAgent
 
 # 設定日誌
 logging.basicConfig(
@@ -49,7 +50,8 @@ class SentimentApp:
             "last_updated": "未知",
             "dictionary_size": 0,
             "threshold_info": {},
-            "evaluation_metrics": {}
+            "evaluation_metrics": {},
+            "rag_info": {}
         }
         
         try:
@@ -71,6 +73,19 @@ class SentimentApp:
             if os.path.exists('evaluation/latest_metrics.json'):
                 with open('evaluation/latest_metrics.json', 'r', encoding='utf-8') as f:
                     self.model_info["evaluation_metrics"] = json.load(f)
+                    
+            # 檢查 RAG 知識庫
+            kb_path = os.path.join('src', 'knowledge_base', 'sentiment_rules.json')
+            if os.path.exists(kb_path):
+                with open(kb_path, 'r', encoding='utf-8') as f:
+                    kb_data = json.load(f)
+                    self.model_info["rag_info"] = {
+                        "rules_count": len(kb_data.get("rules", [])),
+                        "version": kb_data.get("version", "unknown"),
+                        "last_updated": datetime.fromtimestamp(
+                            os.path.getmtime(kb_path)
+                        ).strftime("%Y-%m-%d %H:%M:%S")
+                    }
                     
         except Exception as e:
             logger.error(f"載入模型資訊時發生錯誤: {str(e)}")
@@ -117,6 +132,15 @@ class SentimentApp:
                 - 準確率：{self.model_info['evaluation_metrics'].get('accuracy', 0):.2f}
                 - 平均誤差：{self.model_info['evaluation_metrics'].get('average_error', 0):.2f}
                 - 高信心準確率：{self.model_info['evaluation_metrics'].get('high_confidence_accuracy', 0):.2f}
+                """)
+            
+            # RAG 系統狀態
+            if self.model_info.get("rag_info"):
+                st.info(f"""
+                ### RAG 系統狀態
+                - 規則數量：{self.model_info['rag_info'].get('rules_count', 0)}
+                - 版本：{self.model_info['rag_info'].get('version', 'unknown')}
+                - 最後更新：{self.model_info['rag_info'].get('last_updated', '未知')}
                 """)
             
             # 優化按鈕
@@ -188,9 +212,9 @@ class SentimentApp:
                     with col3:
                         st.subheader("信心分數")
                         confidence_color = (
-                            "normal" if result['信心分數'] >= 0.7 else  # 將 "green" 改為 "normal"
-                            "inverse" if result['信心分數'] >= 0.5 else  # 將 "orange" 改為 "inverse"
-                            "off"  # 將 "red" 改為 "off"
+                            "normal" if result['信心分數'] >= 0.7 else
+                            "inverse" if result['信心分數'] >= 0.5 else
+                            "off"
                         )
                         st.metric(
                             label="信心",
@@ -218,7 +242,37 @@ class SentimentApp:
                         - 字典匹配：與自定義情感字典的匹配程度
                         - 文本長度：文本的充分性評估
                         - 情感一致性：各部分情感評價的一致程度
+                        - 規則匹配：與知識庫規則的匹配程度
                         """)
+                    
+                    # RAG 分析結果
+                    if "rag_analysis" in result:
+                        with st.expander("🔍 RAG 分析詳情"):
+                            st.write("### 規則匹配")
+                            if result["rag_analysis"]["matched_rules"]:
+                                for rule in result["rag_analysis"]["matched_rules"]:
+                                    st.info(f"匹配規則: {rule}")
+                            else:
+                                st.write("未匹配到特定規則")
+                                
+                            st.write("### 上下文模式")
+                            context_patterns = result["rag_analysis"]["context_patterns"]
+                            if context_patterns:
+                                col1, col2 = st.columns(2)
+                                with col1:
+                                    st.metric(
+                                        "上下文長度",
+                                        context_patterns.get("context_length", 0)
+                                    )
+                                with col2:
+                                    flow = context_patterns.get("sentiment_flow", {})
+                                    st.metric(
+                                        "情感趨勢",
+                                        f"{flow.get('trend', 0):.2f}",
+                                        delta=f"波動: {flow.get('volatility', 0):.2f}"
+                                    )
+                            else:
+                                st.write("無上下文模式分析")
                     
                     # 關鍵詞分析
                     st.subheader("關鍵詞分析")
@@ -274,7 +328,7 @@ class SentimentApp:
         st.markdown("---")
         st.markdown(
             "Made with ❤️ by XinLeiYo | "
-            "Last updated: 2025-05-08 13:39:05 UTC"
+            "Last updated: 2025-05-13 17:30:00 UTC"
         )
     
     def run_optimization(self):

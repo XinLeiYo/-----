@@ -1,8 +1,8 @@
 """
 SentiTune-CN - 情感分析核心
-Created: 2025-05-08 13:36:37 UTC
+Created: 2025-05-13 17:23:37 UTC
 Author: XinLeiYo
-Version: 1.0.0
+Version: 1.1.0
 
 此模組提供中文文本情感分析功能，
 包含自定義字典支援和信心分數計算。
@@ -14,6 +14,7 @@ import logging
 import json
 from datetime import datetime
 import os
+from src.agents.rag_agent import RAGAgent
 
 # 設定日誌
 logging.basicConfig(
@@ -42,9 +43,13 @@ class SentimentAnalyzer:
         # 確保必要的目錄存在
         os.makedirs('models', exist_ok=True)
         os.makedirs('logs', exist_ok=True)
+        os.makedirs('src/knowledge_base', exist_ok=True)
         
         # 載入自定義設定
         self._load_custom_settings()
+        
+        # 初始化 RAG Agent
+        self.rag_agent = RAGAgent()
         
         logger.info("情感分析器初始化完成")
 
@@ -69,10 +74,12 @@ class SentimentAnalyzer:
     def analyze(self, text: str) -> Dict[str, Any]:
         """分析文字情感"""
         try:
+            # 基礎分析
             s = SnowNLP(text)
-            
-            # 基礎情感分數
             sentiment_score = s.sentiments
+            
+            # RAG 分析
+            rag_result = self.rag_agent.analyze_with_context(text, [])
             
             # 應用自定義字典進行調整
             words = s.words
@@ -82,13 +89,12 @@ class SentimentAnalyzer:
             for word in words:
                 if word in self.custom_dict:
                     custom_scores.append(self.custom_dict[word])
-                    # 根據詞語的極性增加權重
                     polarity = abs(self.custom_dict[word] - 0.5) * 2
                     word_weights.append(1 + polarity)
                 else:
                     word_weights.append(1.0)
             
-            # 使用加權平均計算調整後的分數
+            # 計算調整後的分數
             if custom_scores:
                 weighted_custom_score = sum(score * weight for score, weight 
                                             in zip(custom_scores, word_weights))
@@ -96,6 +102,14 @@ class SentimentAnalyzer:
                 adjusted_score = (sentiment_score + weighted_custom_score / total_weight) / 2
             else:
                 adjusted_score = sentiment_score
+            
+            # 應用 RAG 規則調整
+            if rag_result["matched_rules"]:
+                for rule in rag_result["matched_rules"]:
+                    adjusted_score += rule["adjustment"]["sentiment_score"]
+            
+            # 確保分數在合理範圍內
+            adjusted_score = max(0.0, min(1.0, adjusted_score))
             
             # 改進的信心分數計算
             confidence_factors = [
@@ -105,37 +119,36 @@ class SentimentAnalyzer:
                 # 2. 基於自定義字典匹配度的信心
                 len(custom_scores) / len(words) if words else 0,
                 
-                # 3. 基於文本長度的信心 (較長文本可能更可靠)
-                min(len(words) / 20, 1.0),  # 最多貢獻1.0的信心
+                # 3. 基於文本長度的信心
+                min(len(words) / 20, 1.0),
                 
                 # 4. 基於情感一致性的信心
                 1.0 if not custom_scores else 
-                1.0 - abs(sentiment_score - sum(custom_scores) / len(custom_scores)) / 2
+                1.0 - abs(sentiment_score - sum(custom_scores) / len(custom_scores)) / 2,
+                
+                # 5. RAG規則匹配的信心
+                len(rag_result["matched_rules"]) * 0.1
             ]
             
             # 計算加權平均的信心分數
-            weights = [0.4, 0.3, 0.1, 0.2]  # 各因素的權重
+            weights = [0.3, 0.2, 0.1, 0.2, 0.2]  # 調整後的權重
             confidence_score = sum(factor * weight 
                                 for factor, weight in zip(confidence_factors, weights))
             
             # 確保信心分數在合理範圍內
             confidence_score = max(0.3, min(confidence_score, 1.0))
             
-            # 使用優化後的閾值判斷情感類別
+            # 判斷情感類別
             if adjusted_score > self.thresholds["positive"]:
                 sentiment = "正面"
             elif adjusted_score < self.thresholds["negative"]:
                 sentiment = "負面"
             else:
                 sentiment = "中性"
-                # 對於中性評價，稍微降低信心分數
                 confidence_score *= 0.9
             
             # 提取關鍵詞
-            keywords = s.keywords(3)  # 提取前3個關鍵詞
-            
-            # 記錄分析過程
-            logger.info(f"完成文本分析 - 長度: {len(text)}, 情感: {sentiment}, 信心: {confidence_score:.2f}")
+            keywords = s.keywords(3)
             
             return {
                 "狀態": "成功",
@@ -146,10 +159,15 @@ class SentimentAnalyzer:
                     "情感極性": confidence_factors[0],
                     "字典匹配": confidence_factors[1],
                     "文本長度": confidence_factors[2],
-                    "情感一致性": confidence_factors[3]
+                    "情感一致性": confidence_factors[3],
+                    "規則匹配": confidence_factors[4]
                 },
                 "關鍵詞": keywords,
-                "分析時間": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+                "分析時間": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"),
+                "rag_analysis": {
+                    "matched_rules": [rule["name"] for rule in rag_result["matched_rules"]],
+                    "context_patterns": rag_result["context_patterns"]
+                }
             }
             
         except Exception as e:

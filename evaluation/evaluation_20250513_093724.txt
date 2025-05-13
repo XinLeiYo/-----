@@ -1,0 +1,6 @@
+評估時間: 2025-05-13 09:37:25.776865
+評估指標:
+accuracy: 0.3875
+average_error: 0.409625
+average_confidence: 0.6504836166897919
+high_confidence_accuracy: 0.4444444444444444
